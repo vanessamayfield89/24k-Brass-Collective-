@@ -39,26 +39,28 @@
     </div>
 
     <div class="contact-panel">
-      <form class="contact-form" action="mailto:info@24k.com" method="post" enctype="text/plain">
+      <form class="contact-form" id="dj-contact-form" action="https://formspree.io/f/xljdwabb" method="POST">
+        <input type="hidden" name="_subject" value="24K DJ Live enquiry">
         <div>
           <label for="dj-name">Name</label>
-          <input type="text" id="dj-name" name="Name" required>
+          <input type="text" id="dj-name" name="name" required>
         </div>
         <div>
           <label for="dj-email">Email</label>
-          <input type="email" id="dj-email" name="Email" required>
+          <input type="email" id="dj-email" name="email" required>
         </div>
         <div>
           <label for="dj-date">Event date</label>
-          <input type="text" id="dj-date" name="Subject" placeholder="e.g. 14 June 2027">
+          <input type="text" id="dj-date" name="event_date" placeholder="e.g. 14 June 2027">
         </div>
         <div>
           <label for="dj-message">Message</label>
-          <textarea id="dj-message" name="Message" required></textarea>
+          <textarea id="dj-message" name="message" required></textarea>
         </div>
         <button type="submit" class="btn filled">Send Enquiry</button>
+        <p class="form-status" id="dj-form-status"></p>
       </form>
-      <p class="contact-form-note">Or you can email us directly at <a href="mailto:info@24k.com">info@24k.com</a></p>
+      <p class="contact-form-note">Or you can email us directly at <a href="mailto:info@24kbrass.com">info@24kbrass.com</a></p>
     </div>
   </div>
 </section>
@@ -95,6 +97,39 @@
   }
   window.addEventListener('load', matchContactPhotoHeight);
   window.addEventListener('resize', matchContactPhotoHeight);
+
+  // Submit straight to Formspree via fetch, no mail app needed.
+  const djForm = document.getElementById('dj-contact-form');
+  const djStatus = document.getElementById('dj-form-status');
+  djForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const dateVal = document.getElementById('dj-date').value;
+    djForm.querySelector('input[name="_subject"]').value = dateVal
+      ? `24K DJ Live enquiry \u2014 ${dateVal}`
+      : '24K DJ Live enquiry';
+    const submitBtn = djForm.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    djStatus.classList.remove('show', 'error');
+    fetch(djForm.action, {
+      method: 'POST',
+      body: new FormData(djForm),
+      headers: { Accept: 'application/json' }
+    }).then((response) => {
+      submitBtn.disabled = false;
+      if (response.ok) {
+        djForm.reset();
+        djStatus.textContent = "Thanks — we've got your enquiry and will be in touch soon.";
+        djStatus.classList.add('show');
+      } else {
+        djStatus.textContent = 'Something went wrong sending that — please try again, or email us directly below.';
+        djStatus.classList.add('show', 'error');
+      }
+    }).catch(() => {
+      submitBtn.disabled = false;
+      djStatus.textContent = 'Something went wrong sending that — please try again, or email us directly below.';
+      djStatus.classList.add('show', 'error');
+    });
+  });
 </script>
 
 </body>
