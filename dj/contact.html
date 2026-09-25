@@ -35,6 +35,7 @@
     <div>
       <span class="eyebrow-line">Send an enquiry</span>
       <h2 class="section-title">Tell us about your event</h2>
+      <img class="section-photo" id="contact-photo" src="../images/section-contact-dj.jpg" alt="24K DJ Live performing" style="margin-top:1.6rem;">
     </div>
 
     <div class="contact-panel">
@@ -79,6 +80,21 @@
       if (!nav.contains(e.target)) nav.classList.remove('open');
     });
   });
+
+  // Match the contact photo's height to the form panel's rendered height,
+  // so it never runs past it — only on wide screens where they sit side by side.
+  function matchContactPhotoHeight() {
+    const photo = document.getElementById('contact-photo');
+    const panel = document.querySelector('.contact-panel');
+    if (!photo || !panel) return;
+    if (window.innerWidth > 800) {
+      photo.style.height = panel.offsetHeight + 'px';
+    } else {
+      photo.style.height = '';
+    }
+  }
+  window.addEventListener('load', matchContactPhotoHeight);
+  window.addEventListener('resize', matchContactPhotoHeight);
 </script>
 
 </body>

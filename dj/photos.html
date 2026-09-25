@@ -35,23 +35,32 @@
     <div class="gallery-set-header">
       <h2>Photos</h2>
     </div>
-    <div class="gallery-carousel">
-      <img src="../images/dj-1.jpg" alt="24K DJ Live performing">
-      <img src="../images/dj-2.jpg" alt="24K DJ Live performing">
-      <img src="../images/dj-3.jpg" alt="24K DJ Live performing">
-      <img src="../images/dj-4.jpg" alt="24K DJ Live performing">
-      <img src="../images/dj-5.jpg" alt="24K DJ Live performing">
-      <img src="../images/dj-6.jpg" alt="24K DJ Live performing">
-      <img src="../images/dj-7.jpg" alt="24K DJ Live performing">
-      <img src="../images/dj-8.jpg" alt="24K DJ Live performing">
-      <img src="../images/dj-9.jpg" alt="24K DJ Live performing">
-      <img src="../images/dj-10.jpg" alt="24K DJ Live performing">
-      <img src="../images/dj-11.jpg" alt="24K DJ Live performing">
-      <img src="../images/dj-12.jpg" alt="24K DJ Live performing">
-      <img src="../images/dj-13.jpg" alt="24K DJ Live performing">
+    <div class="carousel-wrap">
+      <button class="carousel-arrow prev" aria-label="Previous photo">&#8249;</button>
+      <div class="gallery-carousel">
+        <img src="../images/dj-1.jpg" alt="24K DJ Live performing">
+        <img src="../images/dj-2.jpg" alt="24K DJ Live performing">
+        <img src="../images/dj-3.jpg" alt="24K DJ Live performing">
+        <img src="../images/dj-4.jpg" alt="24K DJ Live performing">
+        <img src="../images/dj-5.jpg" alt="24K DJ Live performing">
+        <img src="../images/dj-6.jpg" alt="24K DJ Live performing">
+        <img src="../images/dj-7.jpg" alt="24K DJ Live performing">
+        <img src="../images/dj-8.jpg" alt="24K DJ Live performing">
+        <img src="../images/dj-9.jpg" alt="24K DJ Live performing">
+        <img src="../images/dj-10.jpg" alt="24K DJ Live performing">
+        <img src="../images/dj-11.jpg" alt="24K DJ Live performing">
+        <img src="../images/dj-12.jpg" alt="24K DJ Live performing">
+        <img src="../images/dj-13.jpg" alt="24K DJ Live performing">
+      </div>
+      <button class="carousel-arrow next" aria-label="Next photo">&#8250;</button>
     </div>
   </div>
 </section>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" aria-label="Close">&times;</button>
+  <img src="" alt="">
+</div>
 
 <footer>
   <span class="footer-brand">24K DJ Live</span>
@@ -100,6 +109,40 @@
   }
 
   document.querySelectorAll('.gallery-carousel').forEach(initInfiniteCarousel);
+
+  // Arrow buttons: scroll by roughly one photo's width.
+  document.querySelectorAll('.carousel-wrap').forEach(wrap => {
+    const track = wrap.querySelector('.gallery-carousel');
+    const prev = wrap.querySelector('.carousel-arrow.prev');
+    const next = wrap.querySelector('.carousel-arrow.next');
+    const step = () => {
+      const item = track.querySelector('img');
+      const gap = parseFloat(getComputedStyle(track).gap) || 16;
+      return (item ? item.getBoundingClientRect().width : 300) + gap;
+    };
+    prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+    next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+  });
+
+  // Click-to-enlarge lightbox (works for cloned infinite-loop images too,
+  // since it's delegated on the carousel container itself).
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = lightbox.querySelector('img');
+  document.querySelectorAll('.gallery-carousel').forEach(track => {
+    track.addEventListener('click', (e) => {
+      if (e.target.tagName === 'IMG') {
+        lightboxImg.src = e.target.src;
+        lightboxImg.alt = e.target.alt;
+        lightbox.classList.add('open');
+      }
+    });
+  });
+  lightbox.addEventListener('click', () => lightbox.classList.remove('open'));
+  lightbox.querySelector('.lightbox-close').addEventListener('click', (e) => {
+    e.stopPropagation();
+    lightbox.classList.remove('open');
+  });
+  lightbox.querySelector('img').addEventListener('click', (e) => e.stopPropagation());
 </script>
 
 </body>
