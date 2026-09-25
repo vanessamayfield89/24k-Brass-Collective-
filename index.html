@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>24K — Live Brass Band &amp; DJ Live for Weddings &amp; Events</title>
+<meta name="description" content="24K brings your event to life — choose the full live brass experience with 24K Brass Collective, or 24K DJ Live for a DJ set fused with live horns and vocals.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body style="background-color:#0d0c0a; margin:0;">
+
+<header class="site-header centered" style="background-color:#0d0c0a;">
+  <a class="brand" href="index.html">
+    <img src="images/logo.png" alt="24K logo">
+  </a>
+</header>
+<div class="gold-bar"></div>
+
+<section class="landing-masthead">
+  <p class="make-it-24k">Make it 24K</p>
+</section>
+
+<div class="offer-grid">
+
+  <a class="offer-card" href="band/index.html" style="background-image: linear-gradient(to bottom, rgba(6,5,4,.05) 0%, rgba(6,5,4,.25) 45%, rgba(6,5,4,.85) 80%, rgba(6,5,4,.96) 100%), url('images/hero-home.jpg');">
+    <h2>24K Brass Collective</h2>
+    <span class="btn filled">Explore the Band</span>
+  </a>
+
+  <a class="offer-card" href="dj/index.html" style="background-image: linear-gradient(to bottom, rgba(6,5,4,.05) 0%, rgba(6,5,4,.25) 45%, rgba(6,5,4,.85) 80%, rgba(6,5,4,.96) 100%), url('images/hero-dj.jpg');">
+    <h2>24K DJ Live</h2>
+    <span class="btn filled">Explore DJ Live</span>
+  </a>
+
+</div>
+
+<footer>
+  <span class="footer-brand">24K</span>
+  <span>&copy; 2026 24K Brass Collective. All rights reserved.</span>
+</footer>
+
+<script>
+  // Darken effect: on desktop (a real mouse), rely purely on the CSS
+  // :hover rule below — don't fight it with scroll-based toggling.
+  // On touch devices, darken whichever card is nearest the centre of
+  // the screen, within a narrow band so more of the photo stays visible.
+  const cards = document.querySelectorAll('.offer-card');
+  const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (cards.length && !supportsHover) {
+    let ticking = false;
+    function updateCenterCard() {
+      const viewportCenter = window.innerHeight / 2;
+      cards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        const cardCenter = rect.top + rect.height / 2;
+        const distance = Math.abs(cardCenter - viewportCenter);
+        card.classList.toggle('in-view', distance < rect.height * 0.18);
+      });
+      ticking = false;
+    }
+    function onScroll() {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(updateCenterCard);
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    updateCenterCard();
+  }
+</script>
+
+</body>
+</html>

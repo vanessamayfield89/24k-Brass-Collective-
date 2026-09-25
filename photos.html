@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photos — 24K DJ Live</title>
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body style="background-color:#0d0c0a; margin:0;">
+
+<header class="site-header" style="background-color:#0d0c0a;">
+  <a class="brand" href="index.html">
+    <img src="../images/logo.png" alt="24K Brass Collective logo">
+  </a>
+  <nav class="main-nav">
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false"><span class="bars">☰</span></button>
+    <ul>
+      <li><a href="../index.html">24K</a></li>
+      <li><a href="../band/index.html">24K Brass Collective</a></li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="photos.html" class="active">Photos</a></li>
+      <li><a href="video.html">Videos</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+<div class="gold-bar"></div>
+
+<section class="hero-page" style="background-image: linear-gradient(to bottom, rgba(6,5,4,.05) 0%, rgba(6,5,4,.2) 45%, rgba(6,5,4,.82) 78%, rgba(6,5,4,.96) 100%), url('../images/hero-dj.jpg');">
+  <h1>24K DJ Live in action</h1>
+</section>
+
+<section>
+  <div class="gallery-set">
+    <div class="gallery-set-header">
+      <h2>Photos</h2>
+    </div>
+    <div class="gallery-carousel">
+      <img src="../images/dj-1.jpg" alt="24K DJ Live performing">
+      <img src="../images/dj-2.jpg" alt="24K DJ Live performing">
+      <img src="../images/dj-3.jpg" alt="24K DJ Live performing">
+      <img src="../images/dj-4.jpg" alt="24K DJ Live performing">
+      <img src="../images/dj-5.jpg" alt="24K DJ Live performing">
+      <img src="../images/dj-6.jpg" alt="24K DJ Live performing">
+      <img src="../images/dj-7.jpg" alt="24K DJ Live performing">
+      <img src="../images/dj-8.jpg" alt="24K DJ Live performing">
+      <img src="../images/dj-9.jpg" alt="24K DJ Live performing">
+      <img src="../images/dj-10.jpg" alt="24K DJ Live performing">
+      <img src="../images/dj-11.jpg" alt="24K DJ Live performing">
+      <img src="../images/dj-12.jpg" alt="24K DJ Live performing">
+      <img src="../images/dj-13.jpg" alt="24K DJ Live performing">
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-brand">24K DJ Live</span>
+  <span>&copy; 2026 24K Brass Collective. All rights reserved.</span>
+</footer>
+
+<script>
+  document.querySelectorAll('.nav-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const nav = btn.closest('.main-nav');
+      nav.classList.toggle('open');
+    });
+  });
+  document.addEventListener('click', (e) => {
+    document.querySelectorAll('.main-nav.open').forEach(nav => {
+      if (!nav.contains(e.target)) nav.classList.remove('open');
+    });
+  });
+
+  // Infinite-loop photo carousels: triple the slides, then silently
+  // jump back/forward by one set width when nearing either end.
+  function initInfiniteCarousel(el) {
+    const originals = Array.from(el.children);
+    if (originals.length < 2) return;
+    originals.forEach(n => el.insertBefore(n.cloneNode(true), el.firstChild));
+    originals.forEach(n => el.appendChild(n.cloneNode(true)));
+
+    requestAnimationFrame(() => {
+      el.scrollLeft = el.scrollWidth / 3;
+    });
+
+    let ticking = false;
+    el.addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const setWidth = el.scrollWidth / 3;
+        if (el.scrollLeft < setWidth * 0.5) {
+          el.scrollLeft += setWidth;
+        } else if (el.scrollLeft > setWidth * 2.5) {
+          el.scrollLeft -= setWidth;
+        }
+        ticking = false;
+      });
+    });
+  }
+
+  document.querySelectorAll('.gallery-carousel').forEach(initInfiniteCarousel);
+</script>
+
+</body>
+</html>
