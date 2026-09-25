@@ -616,7 +616,7 @@ footer .footer-brand {
 .gallery-carousel img {
   flex: 0 0 auto;
   width: min(460px, 72vw);
-  aspect-ratio: 4 / 3;
+  height: clamp(200px, 54vw, 345px);
   scroll-snap-align: center;
 }
 
