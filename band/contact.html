@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — 24K Brass Collective</title>
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body style="background-color:#0d0c0a; margin:0;">
+
+<header class="site-header" style="background-color:#0d0c0a;">
+  <a class="brand" href="index.html">
+    <img src="../images/logo.png" alt="24K Brass Collective logo">
+  </a>
+  <nav class="main-nav">
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false"><span class="bars">☰</span></button>
+    <ul>
+      <li><a href="../index.html">24K</a></li>
+      <li><a href="../dj/index.html">24K DJ Live</a></li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="photos.html">Photos</a></li>
+      <li><a href="video.html">Videos</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+<div class="gold-bar"></div>
+
+<section class="hero-page" style="background-image: linear-gradient(to bottom, rgba(6,5,4,.05) 0%, rgba(6,5,4,.2) 45%, rgba(6,5,4,.82) 78%, rgba(6,5,4,.96) 100%), url('../images/hero-contact.jpg');">
+  <h1>Book 24K Brass Collective</h1>
+</section>
+
+<section>
+  <div class="contact-grid">
+    <div>
+      <span class="eyebrow-line">Send an enquiry</span>
+      <h2 class="section-title">Tell us about your event</h2>
+    </div>
+
+    <div class="contact-panel">
+      <form class="contact-form" action="mailto:info@24k.com" method="post" enctype="text/plain">
+        <div>
+          <label for="band-name">Name</label>
+          <input type="text" id="band-name" name="Name" required>
+        </div>
+        <div>
+          <label for="band-email">Email</label>
+          <input type="email" id="band-email" name="Email" required>
+        </div>
+        <div>
+          <label for="band-date">Event date</label>
+          <input type="text" id="band-date" name="Subject" placeholder="e.g. 14 June 2027">
+        </div>
+        <div>
+          <label for="band-message">Message</label>
+          <textarea id="band-message" name="Message" required></textarea>
+        </div>
+        <button type="submit" class="btn filled">Send Enquiry</button>
+      </form>
+      <p class="contact-form-note">Or you can email us directly at <a href="mailto:info@24k.com">info@24k.com</a></p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-brand">24K Brass Collective</span>
+  <span>&copy; 2026 24K Brass Collective. All rights reserved.</span>
+</footer>
+
+<script>
+  const toggle = document.querySelector('.nav-toggle');
+  const nav = document.querySelector('.main-nav');
+  toggle.addEventListener('click', () => {
+    nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', nav.classList.contains('open'));
+  });
+</script>
+
+</body>
+</html>

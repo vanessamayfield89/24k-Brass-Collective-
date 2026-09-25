@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photos — 24K Brass Collective</title>
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body style="background-color:#0d0c0a; margin:0;">
+
+<header class="site-header" style="background-color:#0d0c0a;">
+  <a class="brand" href="index.html">
+    <img src="../images/logo.png" alt="24K Brass Collective logo">
+  </a>
+  <nav class="main-nav">
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false"><span class="bars">☰</span></button>
+    <ul>
+      <li><a href="../index.html">24K</a></li>
+      <li><a href="../dj/index.html">24K DJ Live</a></li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="photos.html" class="active">Photos</a></li>
+      <li><a href="video.html">Videos</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+<div class="gold-bar"></div>
+
+<section class="hero-page" style="background-image: linear-gradient(to bottom, rgba(6,5,4,.05) 0%, rgba(6,5,4,.2) 45%, rgba(6,5,4,.82) 78%, rgba(6,5,4,.96) 100%), url('../images/hero-photos.jpg');">
+  <h1>24K Brass Collective in action</h1>
+</section>
+
+<section>
+
+  <div class="gallery-set">
+    <div class="gallery-set-header">
+      <h2>Photos</h2>
+    </div>
+    <div class="gallery-carousel">
+      <img src="../images/classics-1.jpg" alt="24K Brass Collective performing">
+      <img src="../images/modern-1.jpg" alt="24K Brass Collective performing">
+      <img src="../images/classics-2.jpg" alt="24K Brass Collective performing">
+      <img src="../images/modern-2.jpg" alt="24K Brass Collective performing">
+      <img src="../images/classics-3.jpg" alt="24K Brass Collective performing">
+      <img src="../images/modern-3.jpg" alt="24K Brass Collective performing">
+      <img src="../images/classics-4.jpg" alt="24K Brass Collective performing">
+      <img src="../images/modern-4.jpg" alt="24K Brass Collective performing">
+      <img src="../images/classics-5.jpg" alt="24K Brass Collective performing">
+      <img src="../images/modern-5.jpg" alt="24K Brass Collective performing">
+      <img src="../images/classics-6.jpg" alt="24K Brass Collective performing">
+      <img src="../images/modern-6.jpg" alt="24K Brass Collective performing">
+      <img src="../images/classics-7.jpg" alt="24K Brass Collective performing">
+      <img src="../images/modern-7.jpg" alt="24K Brass Collective performing">
+      <img src="../images/classics-8.jpg" alt="24K Brass Collective performing">
+      <img src="../images/modern-8.jpg" alt="24K Brass Collective performing">
+      <img src="../images/classics-9.jpg" alt="24K Brass Collective performing">
+      <img src="../images/modern-9.jpg" alt="24K Brass Collective performing">
+      <img src="../images/classics-10.jpg" alt="24K Brass Collective performing">
+      <img src="../images/classics-11.jpg" alt="24K Brass Collective performing">
+      <img src="../images/classics-12.jpg" alt="24K Brass Collective performing">
+      <img src="../images/classics-13.jpg" alt="24K Brass Collective performing">
+    </div>
+  </div>
+
+</section>
+
+<footer>
+  <span class="footer-brand">24K Brass Collective</span>
+  <span>&copy; 2026 24K Brass Collective. All rights reserved.</span>
+</footer>
+
+<script>
+  const toggle = document.querySelector('.nav-toggle');
+  const nav = document.querySelector('.main-nav');
+  toggle.addEventListener('click', () => {
+    nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', nav.classList.contains('open'));
+  });
+
+  // Infinite-loop photo carousels: triple the slides, then silently
+  // jump back/forward by one set width when nearing either end.
+  function initInfiniteCarousel(el) {
+    const originals = Array.from(el.children);
+    if (originals.length < 2) return;
+    originals.forEach(n => el.insertBefore(n.cloneNode(true), el.firstChild));
+    originals.forEach(n => el.appendChild(n.cloneNode(true)));
+
+    requestAnimationFrame(() => {
+      el.scrollLeft = el.scrollWidth / 3;
+    });
+
+    let ticking = false;
+    el.addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const setWidth = el.scrollWidth / 3;
+        if (el.scrollLeft < setWidth * 0.5) {
+          el.scrollLeft += setWidth;
+        } else if (el.scrollLeft > setWidth * 2.5) {
+          el.scrollLeft -= setWidth;
+        }
+        ticking = false;
+      });
+    });
+  }
+
+  document.querySelectorAll('.gallery-carousel').forEach(initInfiniteCarousel);
+</script>
+
+</body>
+</html>
