@@ -11,8 +11,22 @@
 
 <header class="site-header centered" style="background-color:#0d0c0a;">
   <a class="brand" href="index.html">
-    <img src="images/logo.png" alt="24K logo">
+    <img src="images/logo.png" alt="24K Brass Collective logo">
   </a>
+  <nav class="main-nav">
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false"><span class="bars">☰</span></button>
+    <ul>
+      <li><a href="index.html" class="active">24K</a></li>
+      <li class="nav-group-label"><a href="band/index.html">24K Brass Collective</a></li>
+      <li class="nav-sub"><a href="band/photos.html">Photos</a></li>
+      <li class="nav-sub"><a href="band/video.html">Videos</a></li>
+      <li class="nav-sub"><a href="band/contact.html">Contact</a></li>
+      <li class="nav-group-label"><a href="dj/index.html">24K DJ Live</a></li>
+      <li class="nav-sub"><a href="dj/photos.html">Photos</a></li>
+      <li class="nav-sub"><a href="dj/video.html">Videos</a></li>
+      <li class="nav-sub"><a href="dj/contact.html">Contact</a></li>
+    </ul>
+  </nav>
 </header>
 <div class="gold-bar"></div>
 
@@ -68,6 +82,18 @@
     window.addEventListener('resize', onScroll);
     updateCenterCard();
   }
+
+  document.querySelectorAll('.nav-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const nav = btn.closest('.main-nav');
+      nav.classList.toggle('open');
+    });
+  });
+  document.addEventListener('click', (e) => {
+    document.querySelectorAll('.main-nav.open').forEach(nav => {
+      if (!nav.contains(e.target)) nav.classList.remove('open');
+    });
+  });
 </script>
 
 </body>
